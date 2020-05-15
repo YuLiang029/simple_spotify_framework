@@ -16,8 +16,8 @@ import uuid
 
 # Sample HTTP error handling
 @app.errorhandler(404)
-def not_found():
-    return render_template('404.html')
+def not_found(error):
+    return render_template('404.html'), 404
 
 
 @app.route('/')
