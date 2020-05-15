@@ -1,0 +1,13 @@
+Flask==0.12.2
+Flask-OAuthlib==0.9.5
+Flask-SQLAlchemy==2.3.2
+pandas==0.22.0
+PyMySQL
+six==1.10.0
+requests==2.18.4
+numpy==1.14.0
+redis==2.10.6
+rq==0.10.0
+requests-oauthlib==1.1.0
+psycopg2==2.7.5
+Werkzeug==0.16.1

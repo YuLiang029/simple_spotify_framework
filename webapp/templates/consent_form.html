@@ -1,0 +1,173 @@
+{% extends "layout.html" %}
+{% block title %}Informed consent form{% endblock %}
+{% block content %}
+    <h2>Informed consent form for participants</h2>
+
+    <p>
+        This page gives you information about the study “Music Genre Exploration”.
+        Before the study begins, it is important that you learn about the procedure
+        followed in this study and that you give your informed consent
+        for voluntary participation. Please read this page carefully.
+    </p>
+
+    <h5>1. Aim and benefit of the study</h5>
+    <p>
+        The aim of this study is to measure your interaction with and evaluation of a music genre
+        exploration tool. This information is used to improve such tools and see how people can best
+        be guided when they want to listen to a new music genre.
+    </p>
+    <p>
+        This study is performed by L. Peeters, T.P. Meeuwisse &amp; J.T. Hilberink, students under the
+        supervision of M.C. Willemsen &amp; Y. Liang of the Human-Technology Interaction group.
+    </p>
+
+    <h5>2. Procedure</h5>
+    <p>
+        In this study you will log in with you Spotify account <b>(note: you can only participate with an
+        active Spotify account, free or paid)</b> and select a new genre that you would like to get familiar
+        with. You will be able to listen to songs that the tool provided, and answer questions about the
+        application and the songs that are recommended to you. You will do two trials of this
+        exploration, evaluating different versions of the tool.
+    </p>
+
+    <h5>3. Risks</h5>
+    <p>
+        The study does not involve any risks or detrimental side effects.
+    </p>
+
+    <h5>4. Duration</h5>
+    <p>
+        The study will last approximately 20 minutes.
+    </p>
+
+    <h5>5. Participants</h5>
+    <p>
+        You were selected because you were registered as participant in the participant database of
+        the Human Technology Interaction group of the Eindhoven University of Technology or
+        because you were personally invited via email.
+    </p>
+
+    <h5>6. Voluntary</h5>
+    <p>
+        Your participation is completely voluntary. You can refuse to participate without giving any
+        reasons and you can stop your participation at any time during the study by closing your web
+        browser. You can also withdraw your permission to use your data up to 24 hours after they
+        were recorded. None of this will have any negative consequences for you whatsoever.
+    </p>
+
+    <h5>7. Compensation</h5>
+    <p>
+        For compensation, you will enter a lottery in which 1 in every 5 participants will receive 20
+        euros. So you have a 20% chance of winning 20 euros.
+    </p>
+
+    <h5>8. Confidentiality</h5>
+    <p>
+        All research conducted at the Human-Technology Interaction Group adheres to the Code of
+        Ethics of the NIP (Nederlands Instituut voor Psychologen – Dutch Institute for Psychologists),
+        and this study has been approved by the Ethical Review Board of the department.
+    </p>
+    <p>
+        In this study, your personal data (age, gender, participant ID, Spotify username and contact
+        email) and experimental data (responses to the questionnaires, interaction time and
+        interactions with the application) will be recorded, analyzed, and stored. You need to log in
+        with your Spotify account in order to join this study, but your credentials will be anonymized.
+        The goal of collecting, analyzing, and storing this data is to answer the research question and
+        publish the results in the scientific literature. To protect your privacy, all data that can be used
+        to personally identify you will be stored on an encrypted server of the Human Technology
+        Interaction group for at least 10 years that is only accessible by selected HTI staff members. No
+        information that can be used to personally identify you will be shared with others.
+    </p>
+    <p>
+        The data collected in this study might also be of relevance for future research projects within
+        the Human Technology Interaction group or by other researchers outside of the group. The aim
+        of those studies might be unrelated to the goals of this study. The collected data might
+        therefore also be made available to the authorized researchers from other institutions in an
+        online data repository with restricted access (only on request). The coded data collected in this
+        study and that will be released to others will (to the best of our knowledge and ability) not
+        contain information that can identify you.
+    </p>
+    <p>
+        At the bottom of this consent form, you can indicate whether or not you agree with the use of
+    your data for future research by other researches, within the Human Technology Interaction
+    group or outside.<br>
+    No video or audio recordings are made that could identify you.
+    </p>
+
+    <h5>9. Further information</h5>
+    <p>
+        If you want more information about this study, the study design, or the results, you can contact
+        Thijs Meeuwisse (contact email: t.p.meeuwisse@student.tue.nl).
+    </p>
+    <p>
+        If you have any complaints about this study, please contact the supervisor, Martijn Willemsen
+        (m.c.willemsen@tue.nl). You can report irregularities related to scientific integrity to
+        confidential advisors of the TU/e.
+    </p>
+
+    <h5>10. Certificate of Consent</h5>
+    <p>
+        By clicking the Agree button you agree that you have read and understood this consent
+        form and that you agree to voluntarily participate in this research experiment carried out
+        by the research group Human Technology Interaction of the Eindhoven University of
+        Technology.
+    </p>
+
+    <form method="get" action="/login" id="consent_form">
+
+        <input type="hidden" name="redirecturl" value="/msi_survey">
+
+        <p class="data-collection-p">
+            I -
+        </p>
+        <div class="data-collection-inputs">
+            <label>
+                <input type="radio" name="consent_to_share" id="agree" value="True"><span>do</span>
+            </label>
+            <label>
+                <input type="radio" name="consent_to_share" id="disagree" value="False"><span>do not</span>
+            </label>
+        </div>
+        <p class="data-collection-txt">
+            give permission to make my anonymized recorded data available to other
+            researchers in HTI or elsewhere on request (in a restricted data repository), and
+            allow others to use this data for future research projects unrelated to this study.
+        </p>
+
+    </form>
+
+
+    <!-- @TODO: (do we need to (?)) implement permission to deny/accept data sharing -->
+
+    <div class="row">
+        <div class="col-sm">
+            <a class="btn btn-secondary" id="action_disagree" href="/">
+                I disagree
+            </a>
+        </div>
+
+        <div class="col-sm text-right">
+            <button type="submit" form="consent_form" class="btn btn-primary" id="action_consent">
+                Agree and login with my Spotify account <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function() {
+           $('#consent_form').submit(function(e) {
+               let radio_val = $("input[name='consent_to_share']:checked").val();
+
+               if (!radio_val) {
+                   alert("Please indicate your preference on making your anonymized data available to other researchers.");
+                   e.preventDefault();
+               }
+           });
+        });
+    </script>
+{% endblock %}

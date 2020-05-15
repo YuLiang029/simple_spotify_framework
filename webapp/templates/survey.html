@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block title %}{{ survey_config.title }}{% endblock %}
+{% block content %}
+    <h3>{{ survey_config.title }}</h3>
+    <p>{{ survey_config.description }}</p>
+
+    <div id="surveyElement"></div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        var log_url = "{{ survey_config.log_url }}";
+        var post_url = "{{ request.url }}";
+        var next_url = "{{ survey_config.next_url }}";
+
+        var log_interaction = function(el) {
+            $.ajax({
+                    type: "POST",
+                    url: log_url,
+                    data: {
+                        'question': $(el).parent().parent().parent().find( "span" ).first().text(),
+                        'answer': $(el).val()
+                    }
+            });
+        };
+
+        $(function () {
+            $("#surveyElement").attr("class", "d3");
+            $('input[type="radio"]').on('change', function() {
+                if ($(this).is(':checked'))
+                {
+                    log_interaction(this);
+                }
+            });
+        });
+
+        window.survey = new Survey.Model({{ survey| tojson | safe }});
+
+        survey
+            .onComplete
+            .add(function (result) {
+                $.ajax({
+                    type: "POST",
+                    url: post_url,
+                    data: result.data,
+                }).done(function () {
+                    window.location.href = next_url;
+                });
+            });
+
+        survey
+            .onCurrentPageChanged
+            .add(function () {
+                $('input[type="radio"]').on('change', function() {
+                    if ($(this).is(':checked'))
+                    {
+                        log_interaction(this);
+                    }
+                });
+
+                $( 'input[type="text"], input[type="email"]').focus(function() {
+                    log_interaction(this);
+                });
+            });
+
+        survey.data = {{ surveydata | tojson | safe }};
+
+        $("#surveyElement").Survey({ model: survey });
+    </script>
+{% endblock %}
+
+
+
