@@ -56,7 +56,7 @@ def login():
             _external=True
         )
         # define authorization scope
-        scope = "user-top-read playlist-modify-private"
+        scope = "user-top-read"
         return spotify.authorize(callback=callback, scope=scope, show_dialog=True)
     else:
         print("TOKEN IN SESSION: REDIRECTING")
@@ -105,7 +105,7 @@ def authorized():
                 user.consent_to_share = True if session["consent_to_share"] == "True" else False
                 db.session.commit()
                 session["userid"] = user.id
-
+                scrape()
                 print(session["redirecturl"])
                 return redirect("/personality_survey")
     except OAuthException:
@@ -297,41 +297,134 @@ def personality_survey():
             "showProgressBar": "top",
             "pages": [{
                 "questions": [{
-                    "name": "age",
-                    "type": "text",
-                    "title": "Your age (years):",
-                    "isRequired": "true"
-                }, {
-                    "name": "gender",
-                    "type": "dropdown",
-                    "title": "Your gender:",
-                    "isRequired": "true",
-                    "colCount": 0,
-                    "choices": [
-                        "male",
-                        "female",
-                        "other"
+                    "type": "matrix",
+                    "name": "Big Five Inventory",
+                    "title": "Below some questions about personality. "
+                             "Please indicate to what extent you agree or disagree with each statement.",
+                    "isAllRowRequired": "true",
+                    "columns": [
+                        {"value": 1, "text": "Strongly Disagree"},
+                        {"value": 2, "text": "Disagree"},
+                        {"value": 3, "text": "Neutral"},
+                        {"value": 4, "text": "Agree"},
+                        {"value": 5, "text": "Strongly Agree"}
+                    ],
+                    "rows": [
+                        {"value": "1", "text": "I see myself as someone who is talkative ."},
+                        {"value": "2", "text": "I see myself as someone who tends to find fault with others ."},
+                        {"value": "3", "text": "I see myself as someone who does a thorough job."},
+                        {"value": "4", "text": "I see myself as someone who is depressed, blue."},
+                        {"value": "5", "text": "I see myself as someone who is original, comes up with new ideas."},
+                        {"value": "6", "text": "I see myself as someone who is reserved ."},
+                        {"value": "7", "text": "I see myself as someone who is helpful and unselfish with others."},
+                        {"value": "8", "text": "I see myself as someone who can be somewhat careless."},
+                        {"value": "9", "text": "I see myself as someone who is relaxed, handles stress well ."},
+                        {"value": "10", "text": "I see myself as someone who is curious about many different things."},
                     ]
                 }]
             }, {
                 "questions": [{
                     "type": "matrix",
-                    "name": "Personaltiy",
-                    "title": "Below some questions how you relate to your personality. "
+                    "name": "Big Five Inventory",
+                    "title": "Below some questions about personality. "
                              "Please indicate to what extent you agree or disagree with each statement.",
                     "isAllRowRequired": "true",
                     "columns": [
-                        {"value": 1, "text": "Completely Disagree"},
-                        {"value": 2, "text": "Strongly Disagree"},
-                        {"value": 3, "text": "Disagree"},
-                        {"value": 4, "text": "Neither Agree nor Disagree"},
-                        {"value": 5, "text": "Agree"},
-                        {"value": 6, "text": "Strongly Agree"},
-                        {"value": 7, "text": "Completely Agree"}
+                        {"value": 1, "text": "Strongly Disagree"},
+                        {"value": 2, "text": "Disagree"},
+                        {"value": 3, "text": "Neutral"},
+                        {"value": 4, "text": "Agree"},
+                        {"value": 5, "text": "Strongly Agree"}
                     ],
                     "rows": [
-                        {"value": "1", "text": "I enjoy vibrant social events with lots of people."},
-                        {"value": "2", "text": "I often spend time exploring unrealistic yet intriguing ideas."},
+                        {"value": "11", "text": "I see myself as someone who is full of energy."},
+                        {"value": "12", "text": "I see myself as someone who starts quarrels with others ."},
+                        {"value": "13", "text": "I see myself as someone who is a reliable worker ."},
+                        {"value": "14", "text": "I see myself as someone who can be tense ."},
+                        {"value": "15", "text": "I see myself as someone who is ingenious, a deep thinker."},
+                        {"value": "16", "text": "I see myself as someone who generates a lot of enthusiasm."},
+                        {"value": "17", "text": "I see myself as someone who has a forgiving nature ."},
+                        {"value": "18", "text": "I see myself as someone who tends to be disorganized ."},
+                        {"value": "19", "text": "I see myself as someone who worries a lot ."},
+                        {"value": "20", "text": "I see myself as someone who has an active imagination."},
+                    ]
+                }]
+            }, {
+                "questions": [{
+                    "type": "matrix",
+                    "name": "Big Five Inventory",
+                    "title": "Below some questions about personality. "
+                             "Please indicate to what extent you agree or disagree with each statement.",
+                    "isAllRowRequired": "true",
+                    "columns": [
+                        {"value": 1, "text": "Strongly Disagree"},
+                        {"value": 2, "text": "Disagree"},
+                        {"value": 3, "text": "Neutral"},
+                        {"value": 4, "text": "Agree"},
+                        {"value": 5, "text": "Strongly Agree"}
+                    ],
+                    "rows": [
+                        {"value": "21", "text": "I see myself as someone who tends to be quiet."},
+                        {"value": "22", "text": "I see myself as someone who is generally trusting ."},
+                        {"value": "23", "text": "I see myself as someone who tends to be lazy ."},
+                        {"value": "24", "text": "I see myself as someone who is emotionally stable, not easily upset."},
+                        {"value": "25", "text": "I see myself as someone who is inventive ."},
+                        {"value": "26", "text": "I see myself as someone who has an assertive personality."},
+                        {"value": "27", "text": "I see myself as someone who can be cold and aloof."},
+                        {"value": "28", "text": "I see myself as someone who perseveres until the task is finished ."},
+                        {"value": "29", "text": "I see myself as someone who can be moody."},
+                        {"value": "30", "text": "I see myself as someone who values artistic, aesthetic experiences ."},
+                    ]
+                }]
+            }, {
+                "questions": [{
+                    "type": "matrix",
+                    "name": "Big Five Inventory",
+                    "title": "Below some questions about personality. "
+                             "Please indicate to what extent you agree or disagree with each statement.",
+                    "isAllRowRequired": "true",
+                    "columns": [
+                        {"value": 1, "text": "Strongly Disagree"},
+                        {"value": 2, "text": "Disagree"},
+                        {"value": 3, "text": "Neutral"},
+                        {"value": 4, "text": "Agree"},
+                        {"value": 5, "text": "Strongly Agree"}
+                    ],
+                    "rows": [
+                        {"value": "31", "text": "I see myself as someone who is sometimes shy, inhibited ."},
+                        {"value": "32",
+                         "text": "I see myself as someone who is considerate and kind to almost everyone ."},
+                        {"value": "33", "text": "I see myself as someone who does things efficiently ."},
+                        {"value": "34", "text": "I see myself as someone who remains calm in tense situations ."},
+                        {"value": "35", "text": "I see myself as someone who prefers work that is routine ."},
+                        {"value": "36", "text": "I see myself as someone who is outgoing, sociable."},
+                        {"value": "37", "text": "I see myself as someone who is sometimes rude to others ."},
+                        {"value": "38",
+                         "text": "I see myself as someone who makes plans and follows through with them."},
+                        {"value": "39", "text": "I see myself as someone who gets nervous easily ."},
+                        {"value": "40", "text": "I see myself as someone who likes to reflect, play with ideas."},
+                    ]
+                }]
+            }, {
+                "questions": [{
+                    "type": "matrix",
+                    "name": "Big Five Inventory",
+                    "title": "Below some questions about personality. "
+                             "Please indicate to what extent you agree or disagree with each statement.",
+                    "isAllRowRequired": "true",
+                    "columns": [
+                        {"value": 1, "text": "Strongly Disagree"},
+                        {"value": 2, "text": "Disagree"},
+                        {"value": 3, "text": "Neutral"},
+                        {"value": 4, "text": "Agree"},
+                        {"value": 5, "text": "Strongly Agree"}
+                    ],
+                    "rows": [
+                        {"value": "41", "text": "I see myself as someone who has few artistic interests."},
+                        {"value": "42", "text": "I see myself as someone who likes to cooperate with others ."},
+                        {"value": "43", "text": "I see myself as someone who is easily distracted."},
+                        {"value": "44", "text": "I see myself as someone who is sophisticated "
+                                                "in art, music, or literature."},
                     ]
                 }]
             }],
@@ -340,6 +433,82 @@ def personality_survey():
 
         survey_config = {
             'title': 'Personality survey',
+            'description': '',
+            'log_url': '/log_survey_behavior',
+            'next_url': url_for('music_preference_survey')
+        }
+        print (surveydata)
+        return render_template('survey.html', survey=survey, surveydata=surveydata, survey_config=survey_config)
+    if request.method == "POST":
+        user = User.query.filter_by(id=session["userid"]).first()
+        user.surveyresponses[:] = [
+            SurveyResponse(userid=user.id, user=user,
+                           itemid=item, value=request.form[item], timestamp=time.time()) for item in
+            request.form]
+        db.session.commit()
+        return "done"
+
+
+@app.route('/music_preference_survey', methods=["GET", "POST"])
+def music_preference_survey():
+    if request.method == "GET":
+        responses = User.query.filter_by(id=session["userid"]).first().surveyresponses
+        surveydata = {}
+
+        for responseitem in responses:
+            m = re.match(r"^([^\[]*)\[([0-9]+)\]$", responseitem.itemid)
+            if m:
+                print(responseitem.itemid + " " + m.group(1))
+                print(m.group(1))
+                if m.group(1) in surveydata:
+                    surveydata[m.group(1)][m.group(2)] = responseitem.value
+                else:
+                    surveydata[m.group(1)] = {}
+                    surveydata[m.group(1)][m.group(2)] = responseitem.value
+            else:
+                surveydata[responseitem.itemid] = responseitem.value
+        survey = {
+            "showProgressBar": "top",
+            "pages": [{
+                "questions": [{
+                    "type": "matrix",
+                    "name": "Music genre preferences",
+                    "title": "Below some music genres are displayed "
+                             "Please indicate to what extent your music taste matches with the genre. "
+                             "You can indicate also that you do not know a genre.",
+                    "isAllRowRequired": "true",
+                    "columns": [
+                        {"value":0, "text": "Not familiar with this genre"},
+                        {"value": 1, "text": "Not a match with my preference, listen never"},
+                        {"value": 2, "text": ""},
+                        {"value": 3, "text": "Not a great match with my preference, Listen rarely"},
+                        {"value": 4, "text": ""},
+                        {"value": 5, "text": "Neutral, Listen regularly"},
+                        {"value": 6, "text": ""},
+                        {"value": 7, "text": "Close to my preference, Listen frequently "},
+                        {"value": 8, "text": ""},
+                        {"value": 9, "text": "Very good match to my preference, listen often"}
+                    ],
+
+                    "rows": [
+                        {"value": "1", "text": "Soft rock"},
+                        {"value": "2", "text": "RnB"},
+                        {"value": "3", "text": "Country"},
+                        {"value": "4", "text": "Rocknrol"},
+                        {"value": "5", "text": "Classical"},
+                        {"value": "6", "text": "Avantgarde"},
+                        {"value": "7", "text": "Punk"},
+                        {"value": "8", "text": "Heavy metal"},
+                        {"value": "9", "text": "Rap"},
+                        {"value": "10", "text": "Electronica"},
+                    ]
+                }]
+            }],
+            "completedHtml": "Redirecting to the next page..."
+        }
+
+        survey_config = {
+            'title': 'Music preference survey',
             'description': '',
             'log_url': '/log_survey_behavior',
             'next_url': url_for('last_step')
