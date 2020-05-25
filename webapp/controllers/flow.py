@@ -493,7 +493,7 @@ def music_preference_survey():
                         {"value": "1", "text": "Soft rock"},
                         {"value": "2", "text": "RnB"},
                         {"value": "3", "text": "Country"},
-                        {"value": "4", "text": "Rocknrol"},
+                        {"value": "4", "text": "Rocknroll"},
                         {"value": "5", "text": "Classical"},
                         {"value": "6", "text": "Avantgarde"},
                         {"value": "7", "text": "Punk"},
