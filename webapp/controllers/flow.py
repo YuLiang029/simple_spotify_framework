@@ -473,21 +473,20 @@ def music_preference_survey():
                 "questions": [{
                     "type": "matrix",
                     "name": "Music genre preferences",
-                    "title": "Below some music genres are displayed "
+                    "title": "Below some music genres are displayed. "
                              "Please indicate to what extent your music taste matches with the genre. "
                              "You can indicate also that you do not know a genre.",
                     "isAllRowRequired": "true",
                     "columns": [
-                        {"value":0, "text": "Not familiar with this genre"},
-                        {"value": 1, "text": "Not a match with my preference, listen never"},
-                        {"value": 2, "text": ""},
-                        {"value": 3, "text": "Not a great match with my preference, Listen rarely"},
-                        {"value": 4, "text": ""},
-                        {"value": 5, "text": "Neutral, Listen regularly"},
-                        {"value": 6, "text": ""},
-                        {"value": 7, "text": "Close to my preference, Listen frequently "},
-                        {"value": 8, "text": ""},
-                        {"value": 9, "text": "Very good match to my preference, listen often"}
+                        {"value": 1, "text": "Not a match, Listen never"},
+                        {"value": 2, "text": " "},
+                        {"value": 3, "text": "Not a good match, Listen rarely"},
+                        {"value": 4, "text": " "},
+                        {"value": 5, "text": "Neutral, Listen sometimes"},
+                        {"value": 6, "text": " "},
+                        {"value": 7, "text": "Good match, Listen regularly "},
+                        {"value": 8, "text": " "},
+                        {"value": 9, "text": "Very good match, Listen often"},
                     ],
 
                     "rows": [
