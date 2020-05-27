@@ -4,7 +4,7 @@ Flask-SQLAlchemy==2.3.2
 pandas==0.22.0
 PyMySQL
 six==1.10.0
-requests==2.18.4
+requests==2.20.0
 numpy==1.14.0
 redis==2.10.6
 rq==0.10.0
