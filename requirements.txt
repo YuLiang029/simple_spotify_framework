@@ -5,7 +5,7 @@ pandas==0.22.0
 PyMySQL
 six==1.10.0
 requests==2.18.4
-numpy==1.14.0
+numpy==1.22.0
 redis==2.10.6
 rq==0.10.0
 requests-oauthlib==1.1.0
